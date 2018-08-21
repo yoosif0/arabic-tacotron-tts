@@ -57,7 +57,7 @@ class DataFeeder(threading.Thread):
       if not os.path.isfile(cmudict_path):
         raise Exception('If use_cmudict=True, you must download ' +
           'http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b to %s'  % cmudict_path)
-      self._cmudict = cmudict.CMUDict(cmudict_path, keep_ambiguous=False)
+      self._cmudict = cmudict.CMUDict(cmudict_path)
       log('Loaded CMUDict with %d unambiguous entries' % len(self._cmudict))
     else:
       self._cmudict = None
@@ -105,7 +105,7 @@ class DataFeeder(threading.Thread):
     self._offset += 1
 
     text = meta[3]
-    if self._cmudict and random.random() < _p_cmudict:
+    if self._cmudict:
       text = ' '.join([self._maybe_get_arpabet(word) for word in text.split(' ')])
 
     input_data = np.asarray(text_to_sequence(text, self._cleaner_names), dtype=np.int32)
@@ -116,7 +116,7 @@ class DataFeeder(threading.Thread):
 
   def _maybe_get_arpabet(self, word):
     arpabet = self._cmudict.lookup(word)
-    return '{%s}' % arpabet[0] if arpabet is not None and random.random() < 0.5 else word
+    return '{%s}' % arpabet[0] if arpabet is not None else word
 
 
 def _prepare_batch(batch, outputs_per_step):
