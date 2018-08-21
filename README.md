@@ -3,16 +3,6 @@
 An implementation of Tacotron speech synthesis in TensorFlow.
 
 
-### Audio Samples
-
-  * **[Audio Samples](https://keithito.github.io/audio-samples/)** from models trained using this repo.
-    * The first set was trained for 877K steps on the [LJ Speech Dataset](https://keithito.com/LJ-Speech-Dataset/)
-      * Speech started to become intelligble around 20K steps.
-      * Although loss continued to decrease, there wasn't much noticable improvement after ~250K steps.
-    * The second set was trained by [@MXGray](https://github.com/MXGray) for 140K steps on the [Nancy Corpus](http://www.cstr.ed.ac.uk/projects/blizzard/2011/lessac_blizzard2011/).
-
-
-
 ## Background
 
 In April 2017, Google published a paper, [Tacotron: Towards End-to-End Speech Synthesis](https://arxiv.org/pdf/1703.10135.pdf),
@@ -63,42 +53,22 @@ Pull requests are welcome!
 
 1. **Download a speech dataset.**
 
-   The following are supported out of the box:
-    * [LJ Speech](https://keithito.com/LJ-Speech-Dataset/) (Public Domain)
-    * [Blizzard 2012](http://www.cstr.ed.ac.uk/projects/blizzard/2012/phase_one) (Creative Commons Attribution Share-Alike)
-
-   You can use other datasets if you convert them to the right format. See [TRAINING_DATA.md](TRAINING_DATA.md) for more info.
-
-
 2. **Unpack the dataset into `~/tacotron`**
 
    After unpacking, your tree should look like this for LJ Speech:
    ```
    tacotron
-     |- LJSpeech-1.1
+     |- nawar
          |- metadata.csv
          |- wavs
    ```
 
-   or like this for Blizzard 2012:
-   ```
-   tacotron
-     |- Blizzard2012
-         |- ATrampAbroad
-         |   |- sentence_index.txt
-         |   |- lab
-         |   |- wav
-         |- TheManThatCorruptedHadleyburg
-             |- sentence_index.txt
-             |- lab
-             |- wav
-   ```
 
 3. **Preprocess the data**
    ```
    python3 preprocess.py --dataset ljspeech
    ```
-     * Use `--dataset blizzard` for Blizzard data
+     * Use `--dataset nawar` for nawar data
 
 4. **Train a model**
    ```
@@ -139,11 +109,6 @@ Pull requests are welcome!
     training speed and avoids occasional slowdowns seen with the default allocator. You
     can enable it by installing it and setting `LD_PRELOAD=/usr/lib/libtcmalloc.so`. With TCMalloc,
     you can get around 1.1 sec/step on a GTX 1080Ti.
-
-  * You can train with [CMUDict](http://www.speech.cs.cmu.edu/cgi-bin/cmudict) by downloading the
-    dictionary to ~/tacotron/training and then passing the flag `--hparams="use_cmudict=True"` to
-    train.py. This will allow you to pass ARPAbet phonemes enclosed in curly braces at eval
-    time to force a particular pronunciation, e.g. `Turn left on {HH AW1 S S T AH0 N} Street.`
 
   * If you pass a Slack incoming webhook URL as the `--slack_url` flag to train.py, it will send
     you progress updates every 1000 steps.
