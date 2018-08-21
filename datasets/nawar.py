@@ -23,7 +23,8 @@ def build_from_path(in_dir, out_dir, num_workers=1, tqdm=lambda x: x):
   executor = ProcessPoolExecutor(max_workers=num_workers)
   futures = []
   index = 1
-  with open(os.path.join(in_dir, 'temp.csv'), encoding='utf-8') as f:
+  fileName= 'temp_filtered.csv'
+  with open(os.path.join(in_dir, fileName), encoding='utf-8') as f:
     for line in f:
       parts = line.strip().split(',')
       parts.append(parts[1])
