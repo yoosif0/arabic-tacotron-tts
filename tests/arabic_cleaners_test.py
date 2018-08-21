@@ -22,11 +22,11 @@ def test_phones_cleaner():
     assert actual == expected
 
 def test_phones_cleaner_convert_arabic_comma():
-    actual = cleaners.arabic_phones_cleaners('{hh aw1 s s t ah0 n}. {y e s}، {hh aw1 s s t ah0 n}. {y e s}')
+    actual = cleaners.arabic_cleaners('{hh aw1 s s t ah0 n}. {y e s}، {hh aw1 s s t ah0 n}. {y e s}')
     expected = '{hh aw1 s s t ah0 n}. {y e s}, {hh aw1 s s t ah0 n}. {y e s}'
     assert actual == expected
 
 def test_phones_cleaner_convert_dash():
-    actual = cleaners.arabic_phones_cleaners('{hh aw1 s s t ah0 n}. {y e s} - {hh aw1 s s t ah0 n}. {y e s} dsd sd')
+    actual = cleaners.arabic_cleaners('{hh aw1 s s t ah0 n}. {y e s} - {hh aw1 s s t ah0 n}. {y e s} dsd sd')
     expected = '{hh aw1 s s t ah0 n}. {y e s} - {hh aw1 s s t ah0 n}. {y e s} dsd sd'
     assert actual == expected

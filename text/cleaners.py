@@ -87,7 +87,7 @@ def english_cleaners(text):
   text = collapse_whitespace(text)
   return text
 
-def arabic_phones_cleaners(text):
+def arabic_cleaners(text):
   text = convert_to_ascii(text)
   text = collapse_whitespace(text)
   return text
