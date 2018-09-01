@@ -5,9 +5,9 @@ import tensorflow as tf
 import threading
 import time
 import traceback
-from text import cmudict, text_to_sequence
+from text import text_to_sequence
 from util.infolog import log
-
+from arabic_pronounce import phonetise
 
 _batches_per_group = 32
 _pad = 0
@@ -47,19 +47,6 @@ class DataFeeder(threading.Thread):
     self.input_lengths.set_shape(self._placeholders[1].shape)
     self.mel_targets.set_shape(self._placeholders[2].shape)
     self.linear_targets.set_shape(self._placeholders[3].shape)
-
-    # Load CMUDict: If enabled, this will randomly substitute some words in the training data with
-    # their ARPABet equivalents, which will allow you to also pass ARPABet to the model for
-    # synthesis (useful for proper nouns, etc.)
-    if hparams.use_cmudict:
-      cmudict_path = os.path.join(self._datadir, 'cmudict-0.7b')
-      if not os.path.isfile(cmudict_path):
-        raise Exception('If use_cmudict=True, you must download ' +
-          'http://svn.code.sf.net/p/cmusphinx/code/trunk/cmudict/cmudict-0.7b to %s'  % cmudict_path)
-      self._cmudict = cmudict.CMUDict(cmudict_path, keep_ambiguous=False)
-      log('Loaded CMUDict with %d unambiguous entries' % len(self._cmudict))
-    else:
-      self._cmudict = None
 
 
   def start_in_session(self, session):
@@ -102,21 +89,29 @@ class DataFeeder(threading.Thread):
       random.shuffle(self._metadata)
     meta = self._metadata[self._offset]
     self._offset += 1
-
     text = meta[3]
-    if self._cmudict:
-      text = ' '.join([self._maybe_get_arpabet(word) for word in text.split(' ')])
+    arr = []
+    for word in text.split(' '):
+      if word in [" ", ""]:
+        pass
+      elif word in [",", '.', '-']:
+        x = word
+        arr.append(x)
+      else:
+        x = self._maybe_get_arpabet(word)
+        arr.append(x)
+    text = ' '.join(arr)
 
     input_data = np.asarray(text_to_sequence(text, self._cleaner_names), dtype=np.int32)
     linear_target = np.load(os.path.join(self._datadir, meta[0]))
     mel_target = np.load(os.path.join(self._datadir, meta[1]))
     return (input_data, mel_target, linear_target, len(linear_target))
 
-
   def _maybe_get_arpabet(self, word):
-    arpabet = self._cmudict.lookup(word)
-    print(arpabet)
-    return '{%s}' % arpabet[0] if arpabet is not None else word
+    pronunciations = phonetise(word)
+    toBeReturned = '{%s}' % pronunciations[0] if len(pronunciations)==1 else '{%s}' % pronunciations[1]
+    print(toBeReturned)
+    return toBeReturned
 
 
 def _prepare_batch(batch, outputs_per_step):
