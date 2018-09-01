@@ -1,0 +1,34 @@
+
+-----------------------------------------------------------------
+Starting new training run
+-----------------------------------------------------------------
+[2018-08-22 06:19:42.811]  Checkpoint path: .\logs-tacotron\model.ckpt
+[2018-08-22 06:19:42.811]  Loading training data from: .\training/train.txt
+[2018-08-22 06:19:42.812]  Using model: tacotron
+[2018-08-22 06:19:42.812]  Hyperparameters:
+  adam_beta1: 0.9
+  adam_beta2: 0.999
+  attention_depth: 256
+  batch_size: 32
+  cleaners: basic_cleaners
+  decay_learning_rate: True
+  decoder_depth: 256
+  embed_depth: 256
+  encoder_depth: 256
+  frame_length_ms: 50
+  frame_shift_ms: 12.5
+  griffin_lim_iters: 60
+  initial_learning_rate: 0.001
+  max_frame_num: 1000
+  max_iters: 300
+  min_level_db: -100
+  num_freq: 1025
+  num_mels: 80
+  outputs_per_step: 5
+  postnet_depth: 256
+  power: 1.5
+  preemphasis: 0.97
+  prenet_depths: [256, 128]
+  ref_level_db: 20
+  sample_rate: 22050
+  use_cmudict: False

@@ -10,7 +10,6 @@ from util.infolog import log
 
 
 _batches_per_group = 32
-_p_cmudict = 0.5
 _pad = 0
 
 
@@ -105,7 +104,7 @@ class DataFeeder(threading.Thread):
     self._offset += 1
 
     text = meta[3]
-    if self._cmudict and random.random() < _p_cmudict:
+    if self._cmudict:
       text = ' '.join([self._maybe_get_arpabet(word) for word in text.split(' ')])
 
     input_data = np.asarray(text_to_sequence(text, self._cleaner_names), dtype=np.int32)
@@ -116,7 +115,8 @@ class DataFeeder(threading.Thread):
 
   def _maybe_get_arpabet(self, word):
     arpabet = self._cmudict.lookup(word)
-    return '{%s}' % arpabet[0] if arpabet is not None and random.random() < 0.5 else word
+    print(arpabet)
+    return '{%s}' % arpabet[0] if arpabet is not None else word
 
 
 def _prepare_batch(batch, outputs_per_step):
