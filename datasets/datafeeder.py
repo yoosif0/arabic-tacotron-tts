@@ -108,10 +108,10 @@ class DataFeeder(threading.Thread):
     return (input_data, mel_target, linear_target, len(linear_target))
 
   def _maybe_get_arpabet(self, word):
-    arpabet = phonetise(word)
-    if(len(arpabet)==0):
-      print("00000000000000000000000000000000000", word)
-    return '{%s}' % arpabet[0]
+    pronunciations = phonetise(word)
+    toBeReturned = '{%s}' % pronunciations[0] if len(pronunciations)==1 else '{%s}' % pronunciations[1]
+    print(toBeReturned)
+    return toBeReturned
 
 
 def _prepare_batch(batch, outputs_per_step):
