@@ -110,7 +110,7 @@ class DataFeeder(threading.Thread):
   def _maybe_get_arpabet(self, word):
     pronunciations = phonetise(word)
     toBeReturned = '{%s}' % pronunciations[0] if len(pronunciations)==1 else '{%s}' % pronunciations[1]
-    print(toBeReturned)
+    print(word, pronunciations, toBeReturned)
     return toBeReturned
 
 
