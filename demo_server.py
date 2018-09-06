@@ -81,7 +81,7 @@ if __name__ == '__main__':
   from wsgiref import simple_server
   parser = argparse.ArgumentParser()
   parser.add_argument('--checkpoint', required=True, help='Full path to model checkpoint')
-  parser.add_argument('--port', type=int, default=9000)
+  parser.add_argument('--port', type=int, default=9200)
   parser.add_argument('--hparams', default='',
     help='Hyperparameter overrides as a comma-separated list of name=value pairs')
   args = parser.parse_args()
