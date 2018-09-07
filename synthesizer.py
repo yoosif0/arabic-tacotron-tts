@@ -6,6 +6,7 @@ from librosa import effects
 from models import create_model
 from text import text_to_sequence
 from util import audio
+from datasets import arpa
 
 
 class Synthesizer:
@@ -26,6 +27,7 @@ class Synthesizer:
 
 
   def synthesize(self, text):
+    text = arpa.to_arpa(text)
     cleaner_names = [x.strip() for x in hparams.cleaners.split(',')]
     seq = text_to_sequence(text, cleaner_names)
     feed_dict = {

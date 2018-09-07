@@ -19,5 +19,4 @@ def to_arpa(ar):
 def _maybe_get_arpabet(word):
     pronunciations = phonetise(word)
     toBeReturned = '{%s}' % pronunciations[0] if len(pronunciations)==1 else '{%s}' % pronunciations[1]
-    # print(word, pronunciations, toBeReturned)
     return toBeReturned
