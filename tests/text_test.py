@@ -1,4 +1,4 @@
-# from text import cleaners, symbols, text_to_sequence, sequence_to_text
+from text import cleaners, symbols, text_to_sequence, sequence_to_text
 # from unidecode import unidecode
 
 
@@ -8,11 +8,12 @@
 #   assert symbols[1] == '~'
 
 
-# def test_text_to_sequence():
-#   assert text_to_sequence('', []) == [1]
-#   assert text_to_sequence('Hi!', []) == [9, 36, 54, 1]
-#   assert text_to_sequence('"A"_B', []) == [2, 3, 1]
-#   assert text_to_sequence('A {AW1 S} B', []) == [2, 64, 83, 132, 64, 3, 1]
+def test_text_to_sequence_arabic():
+  assert text_to_sequence('', []) == [1]
+  assert text_to_sequence('أَيْضاً', []) == [48, 46, 38, 34, 40, 24, 1]
+  assert text_to_sequence('الْقِرَاءَةِ بِاخْتِيَارِ', []) == [24, 32, 34, 20, 35, 18, 46, 24, 16, 46, 19, 35, 11, 27, 35, 24, 52, 34, 50, 35, 38, 46, 24, 18, 35, 1]
+  assert text_to_sequence('الْقِرَاءَةِ بِاخْتِيَارِ', ['arabic_cleaners']) == [24, 32, 34, 20, 35, 18, 46, 24, 16, 46, 19, 35, 11, 27, 35, 24, 52, 34, 50, 35, 38, 46, 24, 18, 35, 1]
+  
 #   assert text_to_sequence('Hi', ['lowercase']) == [35, 36, 1]
 #   assert text_to_sequence('A {AW1 S}  B', ['english_cleaners']) == [28, 64, 83, 132, 64, 29, 1]
 
