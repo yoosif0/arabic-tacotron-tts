@@ -10,13 +10,13 @@
 #      the symbols in symbols.py to match your data).
 # '''
 
-# import re
+import re
 # from unidecode import unidecode
 # from .numbers import normalize_numbers
 
 
-# # Regular expression matching whitespace:
-# _whitespace_re = re.compile(r'\s+')
+# Regular expression matching whitespace:
+_whitespace_re = re.compile(r'\s+')
 
 # # List of (regular expression, replacement) pairs for abbreviations:
 # _abbreviations = [(re.compile('\\b%s\\.' % x[0], re.IGNORECASE), x[1]) for x in [
@@ -55,8 +55,8 @@
 #   return text.lower()
 
 
-# def collapse_whitespace(text):
-#   return re.sub(_whitespace_re, ' ', text)
+def collapse_whitespace(text):
+  return re.sub(_whitespace_re, ' ', text)
 
 
 # def convert_to_ascii(text):
@@ -91,3 +91,7 @@
 #   text = convert_to_ascii(text)
 #   text = collapse_whitespace(text)
 #   return text
+
+def whitespace_ar_cleaners(text):
+    text = collapse_whitespace(text)
+    return text
