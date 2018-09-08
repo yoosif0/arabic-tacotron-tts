@@ -90,28 +90,11 @@ class DataFeeder(threading.Thread):
     meta = self._metadata[self._offset]
     self._offset += 1
     text = meta[3]
-    arr = []
-    for word in text.split(' '):
-      if word in [" ", ""]:
-        pass
-      elif word in [",", '.', '-']:
-        x = word
-        arr.append(x)
-      else:
-        x = self._maybe_get_arpabet(word)
-        arr.append(x)
-    text = ' '.join(arr)
 
     input_data = np.asarray(text_to_sequence(text, self._cleaner_names), dtype=np.int32)
     linear_target = np.load(os.path.join(self._datadir, meta[0]))
     mel_target = np.load(os.path.join(self._datadir, meta[1]))
     return (input_data, mel_target, linear_target, len(linear_target))
-
-  def _maybe_get_arpabet(self, word):
-    pronunciations = phonetise(word)
-    toBeReturned = '{%s}' % pronunciations[0] if len(pronunciations)==1 else '{%s}' % pronunciations[1]
-    print(word, pronunciations, toBeReturned)
-    return toBeReturned
 
 
 def _prepare_batch(batch, outputs_per_step):
