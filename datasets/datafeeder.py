@@ -20,7 +20,7 @@ class DataFeeder(threading.Thread):
     super(DataFeeder, self).__init__()
     self._coord = coordinator
     self._hparams = hparams
-    self._cleaner_names = [x.strip() for x in hparams.cleaners.split(',')]
+    self._cleaner_names = [x.strip() for x in hparams.cleaners.split(',')] # not_used
     self._offset = 0
 
     # Load metadata:
