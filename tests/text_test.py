@@ -1,4 +1,4 @@
-# from text import cleaners, symbols, text_to_sequence, sequence_to_text
+from text import cleaners, symbols, text_to_sequence, sequence_to_text
 # from unidecode import unidecode
 
 
@@ -8,13 +8,14 @@
 #   assert symbols[1] == '~'
 
 
-# def test_text_to_sequence():
-#   assert text_to_sequence('', []) == [1]
-#   assert text_to_sequence('Hi!', []) == [9, 36, 54, 1]
-#   assert text_to_sequence('"A"_B', []) == [2, 3, 1]
-#   assert text_to_sequence('A {AW1 S} B', []) == [2, 64, 83, 132, 64, 3, 1]
-#   assert text_to_sequence('Hi', ['lowercase']) == [35, 36, 1]
-#   assert text_to_sequence('A {AW1 S}  B', ['english_cleaners']) == [28, 64, 83, 132, 64, 29, 1]
+def test_text_to_sequence():
+  assert text_to_sequence('', []) == [1]
+  assert text_to_sequence('{t a s d ii0 d a t i1 n}', []) == [49, 29, 48, 32, 38, 32, 29, 49, 37, 44, 1]
+  assert text_to_sequence('{t a s d ii0 d a t i1 n} {s t a E S A t}', ['lowercase']) == [49, 29, 48, 32, 38, 32, 29, 49, 37, 44, 11, 48, 49, 29, 18, 22, 15, 49, 1]
+  assert text_to_sequence('{t a s d ii0 d a t i1 n} {s t a E S A t}', ['english_cleaners']) == [49, 29, 48, 32, 38, 32, 29, 49, 37, 44, 11, 48, 49, 29, 18, 22, 15, 49, 1]
+  assert text_to_sequence('{t a s d ii0 d a t i1 n} {s t a E S A t}', ['arabic_cleaners']) == [49, 29, 48, 32, 38, 32, 29, 49, 37, 44, 11, 48, 49, 29, 18, 22, 15, 49, 1]
+  # assert text_to_sequence('Hi', ['lowercase']) == [35, 36, 1]
+  # assert text_to_sequence('A {AW1 S}  B', ['english_cleaners']) == [28, 64, 83, 132, 64, 29, 1]
 
 
 # def test_sequence_to_text():
@@ -24,11 +25,11 @@
 #   assert sequence_to_text([2, 64, 83, 132, 64, 3]) == 'A {AW1 S} B'
 
 
-# def test_collapse_whitespace():
-#   assert cleaners.collapse_whitespace('') == ''
-#   assert cleaners.collapse_whitespace('  ') == ' '
-#   assert cleaners.collapse_whitespace('x') == 'x'
-#   assert cleaners.collapse_whitespace(' x.  y,  \tz') == ' x. y, z'
+def test_collapse_whitespace():
+  assert cleaners.collapse_whitespace('') == ''
+  assert cleaners.collapse_whitespace('  ') == ' '
+  assert cleaners.collapse_whitespace('x') == 'x'
+  assert cleaners.collapse_whitespace(' x.  y,  \tz') == ' x. y, z'
 
 
 # def test_convert_to_ascii():
@@ -52,9 +53,9 @@
 #   assert cleaners.expand_numbers('$3.50 for gas.') == 'three dollars, fifty cents for gas.'
 
 
-# def test_cleaner_pipelines():
-#   text = 'Mr. Müller ate  2 Apples'
-#   assert cleaners.english_cleaners(text) == 'mister muller ate two apples'
-#   assert cleaners.transliteration_cleaners(text) == 'mr. muller ate 2 apples'
-#   assert cleaners.basic_cleaners(text) == 'mr. müller ate 2 apples'
+def test_cleaner_pipelines():
+  text = 'Mr. Müller ate  2 Apples'
+  assert cleaners.english_cleaners(text) == 'mister muller ate two apples'
+  assert cleaners.transliteration_cleaners(text) == 'mr. muller ate 2 apples'
+  assert cleaners.basic_cleaners(text) == 'mr. müller ate 2 apples'
 
