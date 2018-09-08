@@ -88,6 +88,6 @@ def english_cleaners(text):
   return text
 
 def arabic_cleaners(text):
-  text = convert_to_ascii(text)
+  text = convert_to_ascii(text)  # not needed
   text = collapse_whitespace(text)
   return text
