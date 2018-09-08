@@ -5,7 +5,6 @@ The default is a set of ASCII characters that works well for English or text tha
 through Unidecode. For other data, you can modify _characters. See TRAINING_DATA.md for details.
 '''
 import os
-from text import cmudict
 
 _pad        = '_'
 _eos        = '~'
