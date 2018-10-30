@@ -80,7 +80,7 @@ Check this article to know more about this project [Arabic-Tacotron-TTS](https:/
 7. Updated symbols to match the Arabic phonetic language
 8. Adjusted data-feeder so that all input text are phonetised by [arabic_pronounce](https://github.com/youssefsharief/arabic_pronounce)
 
-## To Do
+## Areas of Improvement
 * Add cleaners
 * Add embedded diacritiser
 
