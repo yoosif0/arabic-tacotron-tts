@@ -13,7 +13,7 @@ where they present a neural text-to-speech model that learns to synthesize speec
 
 This implementation is pretty much the same as [Keithito's implemetation](https://github.com/keithito/tacotron). Here are [changes](#changes) I made.
 
-Check this article to know more about this project [Arabic-Tacotron-TTS](https://youssefsharief.github.io/Arabic-Tacotron-TTS/)
+Check this article to know more about this project [Arabic-Tacotron-TTS](https://youssefsharief.github.io/Arabic-Tacotron-Text-To-Speech/)
 
 
 ## Quick Start
@@ -95,4 +95,4 @@ Remember to delete the files in the training folder then preprocess again if you
 
 
 ## Thanks to
-Dr. Taha Zerrouki, Dr. Motaz Saad, Dr. Nawar Halabi, Dr. Basem Ahmed, Suhail Kwailat, and Leo Ma for their detailed feedback and recommendations.
+Suhail Kwailat, Dr. Taha Zerrouki, Dr. Motaz Saad, Dr. Nawar Halabi, Keith Ito, Dr. Basem Ahmed, and Leo Ma for their detailed feedback and recommendations.
