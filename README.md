@@ -10,46 +10,35 @@
 Remember to delete the files in training folder then preprocess again if you changed the config
 # Arabic Tacotron TTS
 
-An implementation of Tacotron speech synthesis in TensorFlow for Arabic. This implementation is pretty much the same as [Keithito's implemetation](https://github.com/keithito/tacotron). Here are [changes](#changes) I made.
+An implementation of Tacotron speech synthesis in TensorFlow for Arabic. 
 
 
 ### Audio Samples
 
-  * **[Audio Samples](https://keithito.github.io/audio-samples/)** from models trained using this repo.
-    * The first set was trained for 441K steps on the [LJ Speech Dataset](https://keithito.com/LJ-Speech-Dataset/)
-      * Speech started to become intelligble around 20K steps.
-    * The second set was trained by [@MXGray](https://github.com/MXGray) for 140K steps on the [Nancy Corpus](http://www.cstr.ed.ac.uk/projects/blizzard/2011/lessac_blizzard2011/).
-
-
-### Recent Updates
-
-1. @npuichigo [fixed](https://github.com/keithito/tacotron/pull/205) a bug where dropout was not being applied in the prenet.
-
-2. @begeekmyfriend created a [fork](https://github.com/begeekmyfriend/tacotron) that adds location-sensitive attention and the stop token from the [Tacotron 2](https://arxiv.org/abs/1712.05884) paper. This can greatly reduce the amount of data required to train a model.
+Check **[Audio Samples](https://youssefsharief.github.io/arabic-tacotron-tts/)** from models trained using this repo on [Nawar Halabi's speech corpus](http://en.arabicspeechcorpus.com/)
 
 
 ## Background
 
 In April 2017, Google published a paper, [Tacotron: Towards End-to-End Speech Synthesis](https://arxiv.org/pdf/1703.10135.pdf),
 where they present a neural text-to-speech model that learns to synthesize speech directly from
-(text, audio) pairs. However, they didn't release their source code or training data. This is an
-independent attempt to provide an open-source implementation of the model described in their paper.
+(text, audio) pairs. However, they didn't release their source code or training data. This is an attempt to provide an open-source implementation of the model described in their paper.
 
-The quality isn't as good as Google's demo yet, but hopefully it will get there someday :-).
-Pull requests are welcome!
-
+This implementation is pretty much the same as [Keithito's implemetation](https://github.com/keithito/tacotron). Here are [changes](#changes) I made.
 
 
 ## Quick Start
 
 ### Installing dependencies
 
-1. Install Python 3.
+1. Install Python 3. Use version 3.5 for tensorflow support. You could use anaconda to create a new environment by 
+    1. `conda create  -n myenv python=3.5 `
+    2. `activate myenv`
 
-2. Install the latest version of [TensorFlow](https://www.tensorflow.org/install/) for your platform. For better
-   performance, install with GPU support if it's available. This code works with TensorFlow 1.3 and later.
-
-3. Install requirements:
+2. Install tensorflow   
+   * `pip install tensorflow` or `pip install tensorflow-gpu`
+  
+3. Install other requirements:
    ```
    pip install -r requirements.txt
    ```
@@ -57,24 +46,23 @@ Pull requests are welcome!
 
 ### Using a pre-trained model
 
-1. **Download and unpack a model**:
+1. **Download and unpack the [pretrained model](https://drive.google.com/file/d/1c8VaKKKBdhqiwQWvC2K5ut18RKoNfpgg/view?usp=sharing)**
+   
+2. Extract the model files into a folder in a destination of your choice
+   
+3. **Run the demo server**:
    ```
-   curl http://data.keithito.com/data/speech/tacotron-20180906.tar.gz | tar xzC /tmp
+   python demo_server.py --checkpoint .\{folder_in_a_destination_of_your_choice}\model.ckpt-200000
    ```
 
-2. **Run the demo server**:
-   ```
-   python3 demo_server.py --checkpoint /tmp/tacotron-20180906/model.ckpt
-   ```
-
-3. **Point your browser at localhost:9000**
-   * Type what you want to synthesize
+4. **Point your browser at localhost:9200**
+   * Type what you want to synthesize. Use only diacritised Arabic text.
 
 
 
 ### Training
 
-*Note: you need 40GB or more of free disk space to train a model.*
+*Note: you need 40GB (more or less) of free disk space to train a model.*
 
 1. **Download a speech dataset.**
 
@@ -83,8 +71,17 @@ Pull requests are welcome!
 
    You can use other datasets if you convert them to the right format. See [TRAINING_DATA.md](TRAINING_DATA.md) for more info.
 
+* Preprocess 
+    * Add a folder called nawar_without_hag9 in the tacotron directory in your user folder
+        * Add temp_filtered.csv there
+        * Add a folder called wavs there in which all wav files are there
+    * Run `python .\preprocess.py --dataset nawar`
+* Update max_iters to 400 if not already set to that number
+* Train
+    * `python .\train.py`
 
-2. **Unpack the dataset into `~/tacotron`**
+
+1. **Unpack the dataset into `~/tacotron`**
 
    After unpacking, your tree should look like this for Nawar Halabi's Speech Corpus:
    ```
@@ -94,13 +91,13 @@ Pull requests are welcome!
          |- wavs
    ```
 
-3. **Preprocess the data**
+2. **Preprocess the data**
    ```
    python3 preprocess.py --dataset nawar
    ```
      * Use `--dataset nawar` for Nawar Halabi's data
 
-4. **Train a model**
+3. **Train a model**
    ```
    python3 train.py
    ```
@@ -111,7 +108,7 @@ Pull requests are welcome!
    See [TRAINING_DATA.md](TRAINING_DATA.md) for other languages.
 
 
-5. **Monitor with Tensorboard** (optional)
+4. **Monitor with Tensorboard** (optional)
    ```
    tensorboard --logdir ~/tacotron/logs-tacotron
    ```
@@ -119,7 +116,7 @@ Pull requests are welcome!
    The trainer dumps audio and alignments every 1000 steps. You can find these in
    `~/tacotron/logs-tacotron`.
 
-6. **Demo server for evaluation** 
+5. **Demo server for evaluation** 
    ```powershell
    python .\demo_server.py --checkpoint C:\Users\User\tacotron\logs-tacotron\model.ckpt-70000
    ```
@@ -128,7 +125,6 @@ Pull requests are welcome!
 
   * If you pass a Slack incoming webhook URL as the `--slack_url` flag to train.py, it will send
     you progress updates every 1000 steps.
-
 
 
 ## <a name="changes"></a> Changes from the original repo
@@ -144,3 +140,6 @@ Pull requests are welcome!
 ## To Do
 * Add cleaners
 * Add embedded diacritiser
+
+## Thanks to
+Dr. Taha Zerrouki, Dr. Motaz Saad, Dr. Nawar Halabi, Dr. Basem Ahmed, Suhail Kwailat, and Leo Ma for their descriptive feedback and recommendations.
