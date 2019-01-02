@@ -1,8 +1,8 @@
-import inflect
+# import inflect
 import re
 
 
-_inflect = inflect.engine()
+# _inflect = inflect.engine()
 _comma_number_re = re.compile(r'([0-9][0-9\,]+[0-9])')
 _decimal_number_re = re.compile(r'([0-9]+\.[0-9]+)')
 _pounds_re = re.compile(r'£([0-9\,]*[0-9]+)')
@@ -40,23 +40,23 @@ def _expand_dollars(m):
     return 'zero dollars'
 
 
-def _expand_ordinal(m):
-  return _inflect.number_to_words(m.group(0))
+# def _expand_ordinal(m):
+#   return _inflect.number_to_words(m.group(0))
 
 
-def _expand_number(m):
-  num = int(m.group(0))
-  if num > 1000 and num < 3000:
-    if num == 2000:
-      return 'two thousand'
-    elif num > 2000 and num < 2010:
-      return 'two thousand ' + _inflect.number_to_words(num % 100)
-    elif num % 100 == 0:
-      return _inflect.number_to_words(num // 100) + ' hundred'
-    else:
-      return _inflect.number_to_words(num, andword='', zero='oh', group=2).replace(', ', ' ')
-  else:
-    return _inflect.number_to_words(num, andword='')
+# def _expand_number(m):
+#   num = int(m.group(0))
+#   if num > 1000 and num < 3000:
+#     if num == 2000:
+#       return 'two thousand'
+#     elif num > 2000 and num < 2010:
+#       return 'two thousand ' + _inflect.number_to_words(num % 100)
+#     elif num % 100 == 0:
+#       return _inflect.number_to_words(num // 100) + ' hundred'
+#     else:
+#       return _inflect.number_to_words(num, andword='', zero='oh', group=2).replace(', ', ' ')
+#   else:
+#     return _inflect.number_to_words(num, andword='')
 
 
 def normalize_numbers(text):
