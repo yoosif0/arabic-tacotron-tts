@@ -13,7 +13,7 @@ where they present a neural text-to-speech model that learns to synthesize speec
 
 This implementation is pretty much the same as [Keithito's implemetation](https://github.com/keithito/tacotron). Here are [changes](#changes) I made.
 
-Check this article to know more about this project [Arabic-Tacotron-TTS](https://youssefsharief.github.io/Arabic-Tacotron-Text-To-Speech/)
+Check this article to know more about this project [Arabic-Tacotron-TTS](https://yousof.net/Arabic-Tacotron-Text-To-Speech/)
 
 
 ## Quick Start
